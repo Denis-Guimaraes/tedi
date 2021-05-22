@@ -1,5 +1,7 @@
 package main
 
+import "local/tedi/cmd"
+
 func main() {
-	// Todo
+	cmd.Execute()
 }
