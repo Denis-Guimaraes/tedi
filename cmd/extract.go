@@ -7,6 +7,7 @@ import (
 )
 
 var Folder string
+var Ignore []string
 var Pattern []string
 var Output string
 
@@ -30,6 +31,14 @@ func init() {
 		"f",
 		"./",
 		"folder path to scan",
+	)
+
+	extractCmd.Flags().StringSliceVarP(
+		&Ignore,
+		"ignore",
+		"i",
+		[]string{},
+		"glob pattern to ignore folders or files",
 	)
 
 	extractCmd.Flags().StringSliceVarP(
