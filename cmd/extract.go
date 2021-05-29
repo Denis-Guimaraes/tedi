@@ -2,31 +2,30 @@ package cmd
 
 import (
 	"fmt"
+	"local/tedi/src/extractor"
 
 	"github.com/spf13/cobra"
 )
 
-var Folder string
-var Ignore []string
-var Pattern []string
-var Output string
+var folder string
+var ignore []string
+var pattern []string
+var output string
 
 var extractCmd = &cobra.Command{
 	Use:   "extract",
 	Short: "Extract text from files",
 	Long:  "Extract text from files.",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(Folder)
-		for _, p := range Pattern {
-			fmt.Println(p)
-		}
-		fmt.Println(Output)
+		e := extractor.New(folder, ignore, pattern, output)
+		extractedTexts := e.ExtractAll()
+		fmt.Println(extractedTexts)
 	},
 }
 
 func init() {
 	extractCmd.Flags().StringVarP(
-		&Folder,
+		&folder,
 		"folder",
 		"f",
 		"./",
@@ -34,7 +33,7 @@ func init() {
 	)
 
 	extractCmd.Flags().StringSliceVarP(
-		&Ignore,
+		&ignore,
 		"ignore",
 		"i",
 		[]string{},
@@ -42,7 +41,7 @@ func init() {
 	)
 
 	extractCmd.Flags().StringSliceVarP(
-		&Pattern,
+		&pattern,
 		"pattern",
 		"p",
 		[]string{"\\{te\\}([^}]*)\\{te\\}"},
@@ -50,7 +49,7 @@ func init() {
 	)
 
 	extractCmd.Flags().StringVarP(
-		&Output,
+		&output,
 		"output",
 		"o",
 		"stdout",
