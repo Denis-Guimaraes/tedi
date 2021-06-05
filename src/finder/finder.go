@@ -4,8 +4,15 @@ type Finder interface {
 	Find() []string
 }
 
-type Files struct {
-	Path    string
-	Ignore  []string
+type files struct {
+	path    string
+	ignore  []string
 	results []string
+}
+
+func Files(path string, ignore []string) files {
+	return files{
+		path:   path,
+		ignore: ignore,
+	}
 }

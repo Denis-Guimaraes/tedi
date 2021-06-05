@@ -12,10 +12,7 @@ type extractor struct {
 }
 
 func (e extractor) findFiles() []string {
-	ff := finder.Files{
-		Path:   e.folder,
-		Ignore: e.ignore,
-	}
+	ff := finder.Files(e.folder, e.ignore)
 	return ff.Find()
 }
 

@@ -6,15 +6,15 @@ import (
 	"path/filepath"
 )
 
-func (f Files) Find() []string {
-	err := filepath.Walk(f.Path, f.check)
+func (f files) Find() []string {
+	err := filepath.Walk(f.path, f.check)
 	if err != nil {
-		fmt.Println(err)
+		f.error(err)
 	}
 	return f.results
 }
 
-func (f Files) check(path string, info os.FileInfo, err error) error {
+func (f files) check(path string, info os.FileInfo, err error) error {
 	if err != nil {
 		return err
 	}
@@ -25,19 +25,17 @@ func (f Files) check(path string, info os.FileInfo, err error) error {
 		return nil
 	}
 	if !info.IsDir() {
-		fmt.Println("file found", path)
 		f.results = append(f.results, path)
 	}
 	return nil
 }
 
-func (f Files) isIgnore(path string) bool {
+func (f files) isIgnore(path string) bool {
 	isIgnore := false
-	for _, pattern := range f.Ignore {
+	for _, pattern := range f.ignore {
 		match, err := filepath.Match(pattern, path)
 		if err != nil {
-			fmt.Println(err)
-			continue
+			f.error(err)
 		}
 		if match {
 			isIgnore = true
@@ -45,4 +43,9 @@ func (f Files) isIgnore(path string) bool {
 		}
 	}
 	return isIgnore
+}
+
+func (f files) error(err error) {
+	fmt.Fprintf(os.Stderr, "error: %v\n", err)
+	os.Exit(1)
 }
