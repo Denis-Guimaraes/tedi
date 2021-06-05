@@ -1,5 +1,9 @@
 package extractor
 
+import (
+	"local/tedi/src/finder"
+)
+
 type extractor struct {
 	folder  string
 	ignore  []string
@@ -7,10 +11,12 @@ type extractor struct {
 	output  string
 }
 
-func (e extractor) scan() []string {
-	var files []string
-	// Todo
-	return files
+func (e extractor) findFiles() []string {
+	ff := finder.Files{
+		Path:   e.folder,
+		Ignore: e.ignore,
+	}
+	return ff.Find()
 }
 
 func (e extractor) extract(file string) []string {
@@ -21,7 +27,7 @@ func (e extractor) extract(file string) []string {
 
 func (e extractor) ExtractAll() map[string][]string {
 	extractedTexts := make(map[string][]string)
-	files := e.scan()
+	files := e.findFiles()
 
 	for _, file := range files {
 		texts := e.extract(file)
