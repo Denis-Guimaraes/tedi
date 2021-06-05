@@ -16,3 +16,16 @@ func Files(path string, ignore []string) files {
 		ignore: ignore,
 	}
 }
+
+type texts struct {
+	text    string
+	pattern []string
+	results []string
+}
+
+func Texts(text string, pattern []string) texts {
+	return texts{
+		text:    text,
+		pattern: pattern,
+	}
+}
