@@ -6,7 +6,7 @@ import (
 	"regexp"
 )
 
-func (t *texts) Find() []string {
+func (t texts) Find() []string {
 	for _, pattern := range t.pattern {
 		regex, err := regexp.Compile(pattern)
 		if err != nil {
@@ -21,6 +21,6 @@ func (t *texts) Find() []string {
 
 func (t *texts) addResults(matches [][]string) {
 	for _, match := range matches {
-		t.results = append(t.results, match[0])
+		t.results = append(t.results, match[1])
 	}
 }

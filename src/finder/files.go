@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func (f *files) Find() []string {
+func (f files) Find() []string {
 	err := filepath.Walk(f.path, f.check)
 	if err != nil {
 		f.error(err)

@@ -43,12 +43,11 @@ func (e extractor) ExtractAll() map[string][]string {
 	return extractedTexts
 }
 
-func New(folder string, ignore []string, pattern []string, output string) extractor {
+func New(folder string, ignore []string, pattern []string) extractor {
 	e := extractor{
 		folder:  folder,
 		ignore:  ignore,
 		pattern: pattern,
-		output:  output,
 	}
 	return e
 }
