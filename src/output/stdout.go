@@ -2,7 +2,7 @@ package output
 
 import "fmt"
 
-func (s stdout) Write(extractedTexts map[string][]string) {
+func (s *stdout) Write(extractedTexts map[string][]string) {
 	for filename, files := range extractedTexts {
 		s.writeLines(filename, files)
 	}

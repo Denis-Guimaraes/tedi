@@ -20,6 +20,7 @@ var extractCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		e := extractor.New(folder, ignore, strings.Split(pattern, ","))
 		extractedTexts := e.ExtractAll()
+
 		o := output.New(outputType)
 		o.Write(extractedTexts)
 	},
@@ -52,8 +53,8 @@ func init() {
 
 	extractCmd.Flags().StringVarP(
 		&outputType,
-		"output",
-		"o",
+		"output-type",
+		"ot",
 		"stdout",
 		"output type, stdout or csv",
 	)

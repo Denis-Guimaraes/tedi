@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func (f files) Find() []string {
+func (f *file) Find() []string {
 	err := filepath.Walk(f.path, f.check)
 	if err != nil {
 		f.error(err)
@@ -14,7 +14,7 @@ func (f files) Find() []string {
 	return f.results
 }
 
-func (f *files) check(path string, info os.FileInfo, err error) error {
+func (f *file) check(path string, info os.FileInfo, err error) error {
 	if err != nil {
 		return err
 	}
@@ -30,7 +30,7 @@ func (f *files) check(path string, info os.FileInfo, err error) error {
 	return nil
 }
 
-func (f *files) isIgnore(path string) bool {
+func (f *file) isIgnore(path string) bool {
 	isIgnore := false
 	for _, pattern := range f.ignore {
 		match, err := filepath.Match(pattern, path)
@@ -45,7 +45,7 @@ func (f *files) isIgnore(path string) bool {
 	return isIgnore
 }
 
-func (f *files) error(err error) {
+func (f *file) error(err error) {
 	fmt.Fprintf(os.Stderr, "error: %v\n", err)
 	os.Exit(1)
 }

@@ -6,11 +6,17 @@ type Output interface {
 
 type stdout struct{}
 
+type csv struct {
+	outputPath string
+}
+
 func New(outputType string) Output {
 	switch outputType {
 	case "stdout":
-		return stdout{}
+		return &stdout{}
+	case "csv":
+		return &csv{}
 	default:
-		return stdout{}
+		return &stdout{}
 	}
 }

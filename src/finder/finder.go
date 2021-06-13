@@ -4,28 +4,28 @@ type Finder interface {
 	Find() []string
 }
 
-type files struct {
+type file struct {
 	path    string
 	ignore  []string
 	results []string
 }
 
-func Files(path string, ignore []string) files {
-	return files{
+func File(path string, ignore []string) *file {
+	return &file{
 		path:   path,
 		ignore: ignore,
 	}
 }
 
-type texts struct {
-	text    string
+type text struct {
+	content string
 	pattern []string
 	results []string
 }
 
-func Texts(text string, pattern []string) texts {
-	return texts{
-		text:    text,
+func Text(content string, pattern []string) *text {
+	return &text{
+		content: content,
 		pattern: pattern,
 	}
 }

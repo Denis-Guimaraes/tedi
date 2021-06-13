@@ -11,25 +11,18 @@ type extractor struct {
 	folder  string
 	ignore  []string
 	pattern []string
-	output  string
 }
 
-func (e extractor) findFiles() []string {
-	ff := finder.Files(e.folder, e.ignore)
-	return ff.Find()
-}
-
-func (e extractor) extract(file string) []string {
-	text, err := ioutil.ReadFile(file)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+func New(folder string, ignore []string, pattern []string) *extractor {
+	e := &extractor{
+		folder:  folder,
+		ignore:  ignore,
+		pattern: pattern,
 	}
-	tf := finder.Texts(string(text), e.pattern)
-	return tf.Find()
+	return e
 }
 
-func (e extractor) ExtractAll() map[string][]string {
+func (e *extractor) ExtractAll() map[string][]string {
 	extractedTexts := make(map[string][]string)
 	files := e.findFiles()
 
@@ -43,11 +36,17 @@ func (e extractor) ExtractAll() map[string][]string {
 	return extractedTexts
 }
 
-func New(folder string, ignore []string, pattern []string) extractor {
-	e := extractor{
-		folder:  folder,
-		ignore:  ignore,
-		pattern: pattern,
+func (e *extractor) findFiles() []string {
+	ff := finder.File(e.folder, e.ignore)
+	return ff.Find()
+}
+
+func (e *extractor) extract(file string) []string {
+	content, err := ioutil.ReadFile(file)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
 	}
-	return e
+	tf := finder.Text(string(content), e.pattern)
+	return tf.Find()
 }
