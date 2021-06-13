@@ -1,19 +1,62 @@
 package output
 
-import "fmt"
+import (
+	ecsv "encoding/csv"
+	"fmt"
+	"os"
+)
 
 func (c *csv) Write(extractedTexts map[string][]string) {
-	for filename, files := range extractedTexts {
-		c.writeLines(filename, files)
+	file := c.createFile()
+	defer file.Close()
+	writer := ecsv.NewWriter(file)
+	defer writer.Flush()
+
+	c.writeHeader(writer)
+	for filename, texts := range extractedTexts {
+		c.writeLines(writer, filename, texts)
+	}
+
+	writer.Flush()
+	err := writer.Error()
+	if err != nil {
+		c.error(err)
 	}
 }
 
-func (c *csv) writeLines(filename string, texts []string) {
+func (c *csv) createFile() *os.File {
+	file, err := os.Create("tedi-result.csv")
+	if err != nil {
+		c.error(err)
+	}
+	return file
+}
+
+func (c *csv) writeHeader(writer *ecsv.Writer) {
+	header := []string{"file", "text", "replace"}
+	err := writer.Write(header)
+	if err != nil {
+		c.error(err)
+	}
+}
+
+func (c *csv) writeLines(writer *ecsv.Writer, filename string, texts []string) {
 	for _, text := range texts {
-		c.writeLine(filename, text)
+		line := []string{filename, text, ""}
+		writer.Write(line)
 	}
 }
 
-func (c *csv) writeLine(filename string, text string) {
-	fmt.Printf("%q,%q\n", filename, text)
+func (c *csv) error(err error) {
+	fmt.Fprintf(os.Stderr, "error: %v\n", err)
+	c.removeFile()
+	os.Exit(1)
+}
+
+func (c *csv) removeFile() {
+	err := os.Remove("tedi-result.csv")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
+	}
 }

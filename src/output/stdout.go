@@ -10,10 +10,6 @@ func (s *stdout) Write(extractedTexts map[string][]string) {
 
 func (s *stdout) writeLines(filename string, texts []string) {
 	for _, text := range texts {
-		s.writeLine(filename, text)
+		fmt.Printf("%q,%q\n", filename, text)
 	}
-}
-
-func (s *stdout) writeLine(filename string, text string) {
-	fmt.Printf("%q,%q\n", filename, text)
 }

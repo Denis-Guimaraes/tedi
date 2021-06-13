@@ -54,7 +54,7 @@ func init() {
 	extractCmd.Flags().StringVarP(
 		&outputType,
 		"output-type",
-		"ot",
+		"o",
 		"stdout",
 		"output type, stdout or csv",
 	)
