@@ -4,11 +4,9 @@ type Output interface {
 	Write(extractedTexts map[string][]string)
 }
 
-type stdout struct{}
+type stdout struct {}
 
-type csv struct {
-	outputPath string
-}
+type csv struct {}
 
 func New(outputType string) Output {
 	switch outputType {

@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var folder string
+var folder []string
 var ignore []string
 var pattern string
 var outputType string
@@ -27,11 +27,11 @@ var extractCmd = &cobra.Command{
 }
 
 func init() {
-	extractCmd.Flags().StringVarP(
+	extractCmd.Flags().StringSliceVarP(
 		&folder,
 		"folder",
 		"f",
-		"./",
+		[]string{"./"},
 		"folder path to scan",
 	)
 
