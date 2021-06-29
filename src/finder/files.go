@@ -24,10 +24,22 @@ func (f *file) check(path string, info os.FileInfo, err error) error {
 		}
 		return nil
 	}
-	if !info.IsDir() {
+	if !info.IsDir() && f.matchExtension(path) {
 		f.results = append(f.results, path)
 	}
 	return nil
+}
+
+func (f *file) matchExtension(path string) bool {
+	match := false
+	fileExtension := filepath.Ext(path)
+	for _, extension := range f.extension {
+		if fileExtension == extension {
+			match = true
+			break
+		}
+	}
+	return match
 }
 
 func (f *file) isIgnore(path string) bool {

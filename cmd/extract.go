@@ -9,7 +9,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var folder []string
+var path []string
+var extension []string
 var ignore []string
 var pattern string
 var outputType string
@@ -20,7 +21,7 @@ var extractCmd = &cobra.Command{
 	Long:  "Extract text from files.",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(strings.Split(pattern, ","))
-		e := extractor.New(folder, ignore, strings.Split(pattern, ","))
+		e := extractor.New(path, extension, ignore, strings.Split(pattern, ","))
 		extractedTexts := e.ExtractAll()
 
 		o := output.New(outputType)
@@ -30,17 +31,24 @@ var extractCmd = &cobra.Command{
 
 func init() {
 	extractCmd.Flags().StringSliceVarP(
-		&folder,
-		"folder",
-		"f",
+		&path,
+		"path",
+		"",
 		[]string{"./"},
-		"folder path to scan",
+		"folders path to scan",
+	)
+	extractCmd.Flags().StringSliceVarP(
+		&extension,
+		"extension",
+		"",
+		[]string{"./"},
+		"file extension to search",
 	)
 
 	extractCmd.Flags().StringSliceVarP(
 		&ignore,
 		"ignore",
-		"i",
+		"",
 		[]string{},
 		"glob pattern to ignore folders or files",
 	)
@@ -48,7 +56,7 @@ func init() {
 	extractCmd.Flags().StringVarP(
 		&pattern,
 		"pattern",
-		"p",
+		"",
 		"((?:'|\").*(?:'|\"))",
 		"regular expression to extract texts",
 	)
@@ -56,7 +64,7 @@ func init() {
 	extractCmd.Flags().StringVarP(
 		&outputType,
 		"output-type",
-		"o",
+		"",
 		"stdout",
 		"output type, stdout or csv",
 	)

@@ -8,16 +8,18 @@ import (
 )
 
 type extractor struct {
-	folder  []string
-	ignore  []string
-	pattern []string
+	path      []string
+	extension []string
+	ignore    []string
+	pattern   []string
 }
 
-func New(folder []string, ignore []string, pattern []string) *extractor {
+func New(path []string, extension []string, ignore []string, pattern []string) *extractor {
 	e := &extractor{
-		folder:  folder,
-		ignore:  ignore,
-		pattern: pattern,
+		path:      path,
+		extension: extension,
+		ignore:    ignore,
+		pattern:   pattern,
 	}
 	return e
 }
@@ -38,8 +40,8 @@ func (e *extractor) ExtractAll() map[string][]string {
 
 func (e *extractor) findFiles() []string {
 	var files []string
-	for _,folder := range e.folder {
-		ff := finder.File(folder, e.ignore)
+	for _, path := range e.path {
+		ff := finder.File(path, e.extension, e.ignore)
 		files = append(files, ff.Find()...)
 	}
 	return files

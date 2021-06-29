@@ -5,15 +5,17 @@ type Finder interface {
 }
 
 type file struct {
-	path    string
-	ignore  []string
-	results []string
+	path      string
+	extension []string
+	ignore    []string
+	results   []string
 }
 
-func File(path string, ignore []string) *file {
+func File(path string, extension []string, ignore []string) *file {
 	return &file{
-		path:   path,
-		ignore: ignore,
+		path:      path,
+		extension: extension,
+		ignore:    ignore,
 	}
 }
 
