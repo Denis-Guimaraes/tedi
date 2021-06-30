@@ -35,13 +35,13 @@ func init() {
 		"path",
 		"",
 		[]string{"./"},
-		"folders path to scan",
+		"folder path to scan",
 	)
 	extractCmd.Flags().StringSliceVarP(
 		&extension,
 		"extension",
 		"",
-		[]string{"./"},
+		[]string{".go"},
 		"file extension to search",
 	)
 
