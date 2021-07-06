@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"local/tedi/src/extractor"
 	"local/tedi/src/output"
 	"strings"
@@ -20,7 +19,6 @@ var extractCmd = &cobra.Command{
 	Short: "Extract text from files",
 	Long:  "Extract text from files.",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(strings.Split(pattern, ","))
 		e := extractor.New(path, extension, ignore, strings.Split(pattern, ","))
 		extractedTexts := e.ExtractAll()
 
