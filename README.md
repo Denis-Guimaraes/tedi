@@ -6,6 +6,9 @@ TEdi is a CLI tool writen in go for extract text and replace it.
 
 **tedi extract [options]**
 
+Example for extract all texts inside single or double quote :
+`tedi extract --path ./ --extension .go --ignore .git/*,.bin/* --pattern "((?:'\|\").*(?:'\|\"))" --output-type csv`
+
 | option | type | description | default |
 |--------|------|-------------|---------|
 | --path | string list separated by comma | folder path to scan | `./` |
