@@ -2,7 +2,6 @@ package extractor
 
 import (
 	"fmt"
-	"io/ioutil"
 	"local/tedi/src/finder"
 	"os"
 )
@@ -48,7 +47,7 @@ func (e *extractor) findFiles() []string {
 }
 
 func (e *extractor) extract(file string) []string {
-	content, err := ioutil.ReadFile(file)
+	content, err := os.ReadFile(file)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
