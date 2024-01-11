@@ -9,7 +9,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "tedi",
+	Use:   "§tedi§",
 	Short: "Text Editor",
 	Long:  "TEdi is a CLI tool writen in go for extract text and replace it.",
 }
