@@ -7,6 +7,7 @@ TEdi is a CLI tool writen in go for extract text and replace it.
 **tedi extract [options]**
 
 Example to extract all texts between two `§`:
+
 `tedi extract -path ./ --extension .go --ignore .git/*,.bin/* --delimiter § --output-type csv`
 
 | option | short | type | description | default |
@@ -23,6 +24,7 @@ Example to extract all texts between two `§`:
 **tedi replace [options]**
 
 Example to replace all texts between two `§` with the previously generated and completed csv:
+
 `tedi replace -path ./ --delimiter § --csv ./tedi-result.csv`
 
 | option | short | type | description | default |
