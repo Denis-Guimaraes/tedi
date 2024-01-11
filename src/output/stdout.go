@@ -1,6 +1,9 @@
 package output
 
-import "fmt"
+import (
+	"fmt"
+	"local/tedi/src/logger"
+)
 
 func (s *stdout) Write(extractedTexts map[string][]string) {
 	for filename, files := range extractedTexts {
@@ -10,6 +13,6 @@ func (s *stdout) Write(extractedTexts map[string][]string) {
 
 func (s *stdout) writeLines(filename string, texts []string) {
 	for _, text := range texts {
-		fmt.Printf("%q,%q\n", filename, text)
+		logger.Info(fmt.Sprintf("%q,%q", filename, text))
 	}
 }

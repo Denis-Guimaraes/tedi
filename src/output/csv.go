@@ -3,6 +3,7 @@ package output
 import (
 	ecsv "encoding/csv"
 	"fmt"
+	"local/tedi/src/logger"
 	"os"
 )
 
@@ -48,7 +49,7 @@ func (c *csv) writeLines(writer *ecsv.Writer, filename string, texts []string) {
 }
 
 func (c *csv) error(err error) {
-	fmt.Fprintf(os.Stderr, "error: %v\n", err)
+	logger.Error(fmt.Sprintf("error: %v", err))
 	c.removeFile()
 	os.Exit(1)
 }
@@ -56,7 +57,7 @@ func (c *csv) error(err error) {
 func (c *csv) removeFile() {
 	err := os.Remove("tedi-result.csv")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		logger.Error(fmt.Sprintf("error: %v", err))
 		os.Exit(1)
 	}
 }

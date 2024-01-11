@@ -20,14 +20,14 @@ func File(path string, extension []string, ignore []string) *file {
 }
 
 type text struct {
-	content string
-	pattern []string
-	results []string
+	content   string
+	delimiter string
+	results   []string
 }
 
-func Text(content string, pattern []string) *text {
+func Text(content string, delimiter string) *text {
 	return &text{
-		content: content,
-		pattern: pattern,
+		content:   content,
+		delimiter: delimiter,
 	}
 }

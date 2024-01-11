@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"local/tedi/src/logger"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -15,7 +16,7 @@ var rootCmd = &cobra.Command{
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		logger.Error(fmt.Sprintf("error: %v", err))
 		os.Exit(1)
 	}
 }

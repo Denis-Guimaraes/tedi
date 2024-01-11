@@ -3,22 +3,23 @@ package extractor
 import (
 	"fmt"
 	"local/tedi/src/finder"
+	"local/tedi/src/logger"
 	"os"
 )
 
 type extractor struct {
-	path      []string
+	path      string
 	extension []string
 	ignore    []string
-	pattern   []string
+	delimiter string
 }
 
-func New(path []string, extension []string, ignore []string, pattern []string) *extractor {
+func New(path string, extension []string, ignore []string, delimiter string) *extractor {
 	e := &extractor{
 		path:      path,
 		extension: extension,
 		ignore:    ignore,
-		pattern:   pattern,
+		delimiter: delimiter,
 	}
 	return e
 }
@@ -39,19 +40,17 @@ func (e *extractor) ExtractAll() map[string][]string {
 
 func (e *extractor) findFiles() []string {
 	var files []string
-	for _, path := range e.path {
-		ff := finder.File(path, e.extension, e.ignore)
-		files = append(files, ff.Find()...)
-	}
+	ff := finder.File(e.path, e.extension, e.ignore)
+	files = append(files, ff.Find()...)
 	return files
 }
 
 func (e *extractor) extract(file string) []string {
 	content, err := os.ReadFile(file)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		logger.Error(fmt.Sprintf("error: %v", err))
 		os.Exit(1)
 	}
-	tf := finder.Text(string(content), e.pattern)
+	tf := finder.Text(string(content), e.delimiter)
 	return tf.Find()
 }

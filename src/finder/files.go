@@ -2,6 +2,7 @@ package finder
 
 import (
 	"fmt"
+	"local/tedi/src/logger"
 	"os"
 	"path/filepath"
 )
@@ -58,6 +59,6 @@ func (f *file) isIgnore(path string) bool {
 }
 
 func (f *file) error(err error) {
-	fmt.Fprintf(os.Stderr, "error: %v\n", err)
+	logger.Error(fmt.Sprintf("error: %v", err))
 	os.Exit(1)
 }

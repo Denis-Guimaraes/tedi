@@ -2,20 +2,20 @@ package finder
 
 import (
 	"fmt"
+	"local/tedi/src/logger"
 	"os"
 	"regexp"
 )
 
 func (t *text) Find() []string {
-	for _, pattern := range t.pattern {
-		regex, err := regexp.Compile(pattern)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "error: %v\n", err)
-			os.Exit(1)
-		}
-		matches := regex.FindAllStringSubmatch(string(t.content), -1)
-		t.addResults(matches)
+	pattern := fmt.Sprintf("%s(.*?)%s", t.delimiter, t.delimiter)
+	regex, err := regexp.Compile(pattern)
+	if err != nil {
+		logger.Error(fmt.Sprintf("error: %v", err))
+		os.Exit(1)
 	}
+	matches := regex.FindAllStringSubmatch(string(t.content), -1)
+	t.addResults(matches)
 	return t.results
 }
 
